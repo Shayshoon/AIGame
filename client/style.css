@@ -25,7 +25,10 @@ body {
 
 .chat {
   width: 575px;
-  height: 65px;
+  min-height: 65px;
+  max-height: 350px;
+  padding-block: 10px;
+  overflow: auto;
   border: 5px solid #FFFFFF;
   background-color: #000000;
   z-index: 10;
