@@ -8,5 +8,6 @@ config = {
     'PORT': _env.get('PORT', 8080),
     'API_KEY': _API_KEY,
     'API': _env.get("API"),
-    'DEBUG': _env.get('DEBUG', False)
+    'DEBUG': _env.get('DEBUG') == 'TRUE',
+    'ENABLE_API': _env.get('ENABLE_API') == 'TRUE',
 }
