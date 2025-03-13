@@ -2,7 +2,7 @@ class TextBox {
   #paragraph;
 
   constructor(x, y, text) {
-    this.#paragraph = createP().class('chat').position(x, y).hide();
+    this.#paragraph = createP().class('chat').position(x, y).hide().center('horizontal');
     this.text = text;
   }
 
@@ -14,20 +14,22 @@ class TextBox {
     this.#paragraph.hide();
   }
 
-  type(speed = 30) {
+  type(speed = 10) {
     this.#paragraph.html('').show();
-
     let n = 0;
 
-    const intervalID = setInterval((text, setText) => {
-      const newText = text.substring(0, n);
-      setText(newText);
+    return new Promise((resolve) => {
+      const intervalID = setInterval((text, setText) => {
+        const newText = text.substring(0, n);
+        setText(newText);
 
-      if (newText === text) {
-        clearInterval(intervalID);
-      }
-      n++;
-    }, speed, this.text, (text) => this.#paragraph.html(text));
+        if (newText === text) {
+          clearInterval(intervalID);
+          resolve();
+        }
+        n++;
+      }, speed, this.text, (text) => this.#paragraph.html(text));
+    });
   }
 }
 

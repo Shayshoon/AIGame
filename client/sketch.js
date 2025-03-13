@@ -5,17 +5,25 @@ const sendChatMessage = (text) => fetch('/chat', {
   body: JSON.stringify({ message: text })
 })
 
+let isWaiting = false;
+
 const chatHandler = async (text) => {
-  const response = await sendChatMessage(text);
-  const data = await response.json();
-  t1.text = data.received;
-  t1.type();
+  if (!isWaiting) {
+    isWaiting = true;
+    input.disable();
+    const response = await sendChatMessage(text);
+    const data = await response.json();
+    t1.text = data.received;
+    await t1.type();
+    input.enable();
+    isWaiting = false;
+  }
 }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  input = new Input(50, 50, chatHandler);
-  t1 = new TextBox(50, 150, "The quick brown fox jumps over the lazy dog");
+  input = new Input(0, 50, chatHandler);
+  t1 = new TextBox(0, 550, "The quick brown fox jumps over the lazy dog");
   t1.type();
   input.show();
 }
